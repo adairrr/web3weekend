@@ -1,0 +1,27 @@
+{
+  "name": "@crypto-fans/monorepo",
+  "version": "1.0.0",
+  "keywords": [
+    "ethereum",
+    "react",
+    "workspaces",
+    "yarn"
+  ],
+  "private": true,
+  "scripts": {
+    "hh:chain": "yarn workspace @crypto-fans/hardhat chain --hostname 0.0.0.0",
+    "hh:console": "yarn workspace @crypto-fans/hardhat hardhat console",
+    "hh:test": "yarn workspace @crypto-fans/hardhat test",
+    "hh:compile": "yarn workspace @crypto-fans/hardhat compile",
+    "hh:deploy": "yarn workspace @crypto-fans/hardhat deploy",
+    "hh:watch": "yarn workspace @crypto-fans/hardhat watch",
+    "hh:accounts": "yarn workspace @crypto-fans/hardhat accounts",
+    "hh:generate": "yarn workspace @crypto-fans/hardhat generate",
+    "start": "yarn workspace @crypto-fans/frontend start"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
