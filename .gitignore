@@ -18,6 +18,7 @@ packages/frontend/yarn-error.log*
 packages/hardhat/cache
 packages/hardhat/*.txt
 packages/hardhat/.openzeppelin
+packages/hardhat/artifacts
 
 
 packages/subgraph/subgraph.yaml
