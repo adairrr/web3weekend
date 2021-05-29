@@ -10,17 +10,17 @@ packages/frontend.pnp.js
 packages/frontend/coverage
 packages/frontend/build
 
-
+# frontend
 packages/frontend/yarn-debug.log*
 packages/frontend/yarn-error.log*
 
-
+# hardhat
 packages/hardhat/cache
 packages/hardhat/*.txt
 packages/hardhat/.openzeppelin
 packages/hardhat/artifacts
 
-
+# subgraph
 packages/subgraph/subgraph.yaml
 packages/subgraph/generated
 packages/subgraph/build
@@ -28,6 +28,8 @@ packages/subgraph/abis
 packages/subgraph/config/config.json
 packages/subgraph/config/config.ts
 packages/frontend/src/contracts
+
+docker/graph-node/data
 
 # misc
 .DS_Store

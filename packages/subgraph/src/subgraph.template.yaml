@@ -5,7 +5,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: AnonyFans
-    network: hardhat
+    network: localhost
     source:
       address: '{{AnonyFansAddress}}'
       abi: AnonyFans
@@ -22,10 +22,10 @@ dataSources:
         - name: IERC721Metadata
           file: ../../node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
       eventHandlers:
-        - event: Approval(indexed address,indexed address,indexed uint256)
-          handler: handleApproval
-        - event: ApprovalForAll(indexed address,indexed address,bool)
-          handler: handleApprovalForAll
+        # - event: Approval(indexed address,indexed address,indexed uint256)
+        #   handler: handleApproval
+        # - event: ApprovalForAll(indexed address,indexed address,bool)
+        #   handler: handleApprovalForAll
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
