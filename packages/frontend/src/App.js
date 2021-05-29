@@ -13,7 +13,9 @@ function App() {
   let [currentMetaMaskAccount, setCurrentMetaMaskAccount] = useState(null);
   let [ethersProvider, setEthersProvider] = useState();
   let [provider, setProvider] = useState();
-
+  let [walletService, setWalletService] = useState();
+  let [keyToPurchase, setKeyToPurchase] = useState();
+  let [hashOfPurchasedKey, setHashOfPurchasedKey] = useState();
 
   useEffect(() => {
     const init = async () => {
@@ -79,23 +81,9 @@ function App() {
               },
             };
 
-            const walletService = new WalletService(networks)
-            await walletService.connect(_ethersProvider, signer)
-
-            console.log('walletService: ', walletService);
-
-            const lockAddress = '0xF735257c43dB1723AAE2A46d71E467b1b8a8422A';
-            // await walletService.purchaseKey(
-            //   {
-            //     lockAddress,
-            //   },
-            //   (error, hash) => {
-            //     // This is the hash of the transaction!
-            //     console.log({ hash })
-            //   }
-            // );
-            //the created hash is: 0x3cd5a3ffda25c8e9d9bb0eefd3fadd0efff3f98e8f3f615b02a79284b6b318c7
-
+            const _walletService = new WalletService(networks);
+            await _walletService.connect(_ethersProvider, signer)
+            setWalletService(_walletService);
 
             // setEthersSigner(signer);
           //
@@ -121,59 +109,91 @@ function App() {
     init();
   }, []);
 
-const getAccounts = async () => {
-  try {
-    const accounts = await provider.request({ method: 'eth_requestAccounts' });
-    await handleAccountsChanged(accounts);
-  } catch (error) {
-    console.error(error);
+  const getAccounts = async () => {
+    try {
+      const accounts = await provider.request({ method: 'eth_requestAccounts' });
+      await handleAccountsChanged(accounts);
+    } catch (error) {
+      console.error(error);
+    };
   };
-};
 
-function handleAccountsChanged(accounts) {
-  if (accounts.length === 0) {
-    console.log('Please connect to MetaMask.');
-  } else if (accounts[0] !== currentMetaMaskAccount) {
-    console.log('account[0]: ', accounts[0]);
-    setCurrentMetaMaskAccount(accounts[0]);
-    setIsConnected(true);
-    setIsConnecting(false);
-    setIsMetamaskInstalled(true);
-  }
-};
-
-// function handleChainChanged(_chainId) {
-//   window.location.reload();
-// };
-
-//Give a MetaMask account permission to interact with the app
-const handleOnConnect = async () => {
-  setIsConnecting(true);
-  try {
-    await getAccounts();
-
-    provider.on('accountsChanged', handleAccountsChanged);
-
-    let signer = await ethersProvider.getSigner();
-    // setEthersSigner(signer);
-
-    // const _taro = new ethers.Contract(
-    //   taroAddress.Taro,
-    //   Taro.abi,
-    //   signer
-    // );
-    // setTaro(_taro);
-
-    // const _governorAlpha = new ethers.Contract(
-    //   governorAlphaAddress.GovernorAlpha,
-    //   GovernorAlpha.abi,
-    //   signer
-    // );
-    // setGovernorAlpha(_governorAlpha);
-  } catch (error) {
-    console.error(error);
+  function handleAccountsChanged(accounts) {
+    if (accounts.length === 0) {
+      console.log('Please connect to MetaMask.');
+    } else if (accounts[0] !== currentMetaMaskAccount) {
+      console.log('account[0]: ', accounts[0]);
+      setCurrentMetaMaskAccount(accounts[0]);
+      setIsConnected(true);
+      setIsConnecting(false);
+      setIsMetamaskInstalled(true);
+    }
   };
-};
+
+  // function handleChainChanged(_chainId) {
+  //   window.location.reload();
+  // };
+
+  //Give a MetaMask account permission to interact with the app
+  const handleOnConnect = async () => {
+    setIsConnecting(true);
+    try {
+      await getAccounts();
+
+      provider.on('accountsChanged', handleAccountsChanged);
+
+      let signer = await ethersProvider.getSigner();
+
+      const networks = {
+        4: {
+          provider:
+            ethersProvider,
+          unlockAddress: '0xd8c88be5e8eb88e38e6ff5ce186d764676012b0b',
+        },
+      };
+
+      const _walletService = new WalletService(networks);
+      await _walletService.connect(ethersProvider, signer)
+      setWalletService(_walletService);
+
+      // setEthersSigner(signer);
+
+      // const _taro = new ethers.Contract(
+      //   taroAddress.Taro,
+      //   Taro.abi,
+      //   signer
+      // );
+      // setTaro(_taro);
+
+      // const _governorAlpha = new ethers.Contract(
+      //   governorAlphaAddress.GovernorAlpha,
+      //   GovernorAlpha.abi,
+      //   signer
+      // );
+      // setGovernorAlpha(_governorAlpha);
+    } catch (error) {
+      console.error(error);
+    };
+  };
+
+  const _purchaseKey = async e => {
+    // const lockAddress = '0xF735257c43dB1723AAE2A46d71E467b1b8a8422A';
+    e.preventDefault();
+    let lockAddress = keyToPurchase.toString();
+
+    await walletService.purchaseKey(
+      {lockAddress,},
+      (error, hash) => {
+        // This is the hash of the transaction!
+        console.log('hash: ', hash);
+        setHashOfPurchasedKey(hash);
+      }
+    );
+  };
+
+  const handleOnPurchaseKeyChange = e => {
+    setKeyToPurchase(e.target.value);
+  };
 
   return (
     <div className="App">
@@ -190,6 +210,15 @@ const handleOnConnect = async () => {
             {isConnecting ? 'Connecting' : 'Connect'}
           </button>
         }
+      </div>
+      <br></br>
+      <div>
+        <p>You want the buy a key from the lock of this creator: 0xF735257c43dB1723AAE2A46d71E467b1b8a8422A</p>
+        <form onSubmit={_purchaseKey}>
+          <input placeholder="paste the lock # here" onChange={handleOnPurchaseKeyChange}></input>
+          <button type="submit">Purchase a key</button>
+        </form>
+        <p>This is the hash of the key you purchased: {hashOfPurchasedKey}</p>
       </div>
     </div>
   );
