@@ -6,14 +6,15 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ GITHUB_USERNAME/your-contract",
-    "create-local": "graph create --node http://localhost:8020/ crypto-fans/cryptofans-contract",
-    "remove-local": "graph remove --node http://localhost:8020/ crypto-fans/cryptofans-contract",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 crypto-fans/cryptofans-contract"
+    "create-local": "graph create --node http://localhost:8020/ anonyfans/posts-contract",
+    "remove-local": "graph remove --node http://localhost:8020/ anonyfans/posts-contract",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/posts-contract"
   },
   "dependencies": {
-    "@amxx/graphprotocol-utils": "^0.0.8",
+    "@amxx/graphprotocol-utils": "^0.1.0",
     "@graphprotocol/graph-cli": "^0.20.0",
-    "@graphprotocol/graph-ts": "^0.20.0"
+    "@graphprotocol/graph-ts": "^0.20.0",
+    "concat": "^1.0.3"
   },
   "devDependencies": {
     "mustache": "^4.1.0"

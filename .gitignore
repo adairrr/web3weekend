@@ -23,6 +23,7 @@ packages/hardhat/artifacts
 
 packages/subgraph/subgraph.yaml
 packages/subgraph/generated
+packages/subgraph/build
 packages/subgraph/abis
 packages/subgraph/config/config.json
 packages/subgraph/config/config.ts

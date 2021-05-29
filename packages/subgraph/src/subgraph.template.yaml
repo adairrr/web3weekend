@@ -1,0 +1,31 @@
+specVersion: 0.0.2
+description: anonyfans-subgraph
+schema:
+  file: ./src/schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: AnonyFans
+    network: hardhat
+    source:
+      address: '{{AnonyFansAddress}}'
+      abi: AnonyFans
+      startBlock: 8668439
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Token
+      abis:
+        - name: AnonyFans
+          file: ./abis/AnonyFans.json
+        - name: IERC721Metadata
+          file: ../../node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts

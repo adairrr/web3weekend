@@ -10,6 +10,7 @@
   "private": true,
   "scripts": {
     "hh:chain": "yarn workspace @crypto-fans/hardhat chain --hostname 0.0.0.0",
+    "hh:fork": "yarn workspace @crypto-fans/hardhat fork --hostname 0.0.0.0",
     "hh:console": "yarn workspace @crypto-fans/hardhat hardhat console",
     "hh:test": "yarn workspace @crypto-fans/hardhat test",
     "hh:compile": "yarn workspace @crypto-fans/hardhat compile",
@@ -22,11 +23,11 @@
     "graph:prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
     "graph:codegen": "yarn workspace @crypto-fans/subgraph graph codegen",
     "graph:build": "yarn workspace @crypto-fans/subgraph graph build",
-    "graph:create-local": "yarn workspace @crypto-fans/subgraph graph create",
-    "graph:remove-local": "yarn workspace @crypto-fans/subgraph graph remove",
-    "graph:deploy-local": "yarn workspace @crypto-fans/subgraph graph deploy",
-    "graph:ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
-    "deploy-and-graph": "yarn deploy && yarn graph-ship-local",
+    "graph:create-local": "yarn workspace @crypto-fans/subgraph graph create --node http://localhost:8020/ anonyfans/posts-contract",
+    "graph:remove-local": "yarn workspace @crypto-fans/subgraph graph remove --node http://localhost:8020/ anonyfans/posts-contract",
+    "graph:deploy-local": "yarn workspace @crypto-fans/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/posts-contract",
+    "graph:ship-local": "yarn graph:prepare && yarn graph:codegen && yarn graph:deploy-local",
+    "deploy-and-graph": "yarn hh:deploy && yarn graph:ship-local",
     "start": "yarn workspace @crypto-fans/frontend start"
   },
   "workspaces": {
