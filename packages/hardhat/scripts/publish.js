@@ -12,6 +12,14 @@ function publishContract(contractName) {
     "to",
     chalk.gray(publishDir)
   );
+
+  try {
+    fs.readFileSync(`${hre.config.paths.artifacts}/${contractName}.address`);
+  } catch (error) {
+    console.log(chalk.gray(` Skipping ${contractName} because it isn't deployed.`));
+    return false;
+  }
+
   try {
     let contract = fs
       .readFileSync(`${bre.config.paths.artifacts}/contracts/${contractName}.sol/${contractName}.json`)
