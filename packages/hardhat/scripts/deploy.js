@@ -11,6 +11,7 @@ const main = async () => {
 
   //const greeter = await deploy("Greeter", ["Hello, Hardhat!"]) // <-- add in constructor args like line 19
   const asset = await deploy("UniqueAsset", ["Initial", "Deploy!?"]) // <-- why I need this if they are created from Factory? :/
+  const collection = await deploy("Collection", ["Initial", "Deploy!?"]) // <-- why I need this if they are created from Factory? :/
   const anonyfans = await deploy("AnonyFans") 
 
   //const yourContract = await ethers.getContractAt('YourContract', "0xaAC799eC2d00C013f1F11c37E654e59B0429DF6A") //<-- if you want to instantiate a version of a contract at a specific address!

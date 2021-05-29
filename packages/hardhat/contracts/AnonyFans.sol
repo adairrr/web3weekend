@@ -1,9 +1,10 @@
 pragma solidity ^0.8.0;
 
 import "./UniqueAsset.sol";
+import "./IAnonyFans.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract AnonyFans is Ownable {
+contract AnonyFans is Ownable, IAnonyFans {
 
     // Creators can upload assets
     mapping ( address => bool) public registeredCreators;
@@ -17,34 +18,51 @@ contract AnonyFans is Ownable {
     
     //constructor() ERC721("PostItem", "PST") {}
 
-    function newPost(address player, string memory tokenURI, string memory name, string memory symbol)
+    function newCollection(string memory name, string memory symbol, string memory tokenURI)
         external
         onlyRegisteredCreators
         returns (uint256)
     {
         UniqueAsset newAsset = new UniqueAsset (name, symbol);
-        /*_tokenIds.increment();
+        // TODO: assign collection to msg.sender
+        // TODO: emit event;
 
-        uint256 newItemId = _tokenIds.current();
-        _mint(player, newItemId);
-        _setTokenURI(newItemId, tokenURI);
+        
+    }
 
-        return newItemId;*/
+    function addAssetToCollection() {
+        // TODO
+        newAsset.uploadAsset(msg.sender, tokenURI);
+        
     }
 
     function registerCreator() 
         external 
     {
         registeredCreators[msg.sender] = true;
-        // emit NewCreatorRegistration(msg.sender, block.number, block.timestamp)
+        emit NewCreatorRegistered(msg.sender, block.number, block.timestamp);
     }
    
     function unregisterCreator() 
         external 
     {
-        registeredCreators[msg.sender] = false;
+        delete registeredCreators[msg.sender];
         // TODO: Transfer all assets to user
         // emit CreatorUnregistered(msg.sender, block.number, block.timestamp)
     }
 
+    function whoAmI()
+        external
+        view
+        returns(address)
+    {
+        return msg.sender;
+    }
+    function amIaRegisteredCreator()
+        external
+        view
+        returns(bool)
+    {
+        return registeredCreators[msg.sender];
+    }
 }
