@@ -1,1 +1,1 @@
-module.exports = ["Greeter"];
+module.exports = ["OurNFT"];
