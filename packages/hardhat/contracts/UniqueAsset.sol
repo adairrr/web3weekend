@@ -23,18 +23,18 @@ contract UniqueAsset is ERC721, /*ERC721Enumerable,*/ ERC721URIStorage, Ownable 
 
     constructor() ERC721("PostItem", "PST") {}
 
-    function newPost(address player, string memory tokenURI)
+    function newPost(address creator, string memory tokenURI)
         public
         onlyRegisteredUsers
         returns (uint256)
     {
         _tokenIds.increment();
 
-        uint256 newItemId = _tokenIds.current();
-        _mint(player, newItemId);
-        _setTokenURI(newItemId, tokenURI);
+        uint256 newPostId = _tokenIds.current();
+        _mint(creator, newPostId);
+        _setTokenURI(newPostId, tokenURI);
 
-        return newItemId;
+        return newPostId;
     }
 */
 
