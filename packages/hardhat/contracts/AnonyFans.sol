@@ -1,6 +1,6 @@
 pragma solidity ^0.8.0;
 
-import "./UniqueAsset.sol";
+import "./Collection.sol";
 import "./IAnonyFans.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -10,30 +10,45 @@ contract AnonyFans is Ownable, IAnonyFans {
     mapping ( address => bool) public registeredCreators;
     // Users can consume assets. Not used for now, but can be used for Users Ranking.
     mapping ( address => bool) public registeredUsers;
+    // Collections per Creator (1 for now)
+    mapping ( address => Collections) public collections;
 
     modifier onlyRegisteredCreators() {
         require(registeredCreators[msg.sender], "Creator not registered.");
         _;
     }
     
-    //constructor() ERC721("PostItem", "PST") {}
 
-    function newCollection(string memory name, string memory symbol, string memory tokenURI)
+    function createCollection(string memory name, string memory symbol)
         external
         onlyRegisteredCreators
+    {
+        Collection newCollection = new Collection (name, symbol);
+        // TODO: assign collection to msg.sender
+        collections[msg.sender].collection = newCollection;
+        collections[msg.sender].exists = true;
+        emit CollectionAdded(msg.sender, name, symbol, block.number, block.timestamp);
+    }
+
+    function addAssetToCollection(string memory tokenURI) 
+        external
         returns (uint256)
     {
-        UniqueAsset newAsset = new UniqueAsset (name, symbol);
-        // TODO: assign collection to msg.sender
-        // TODO: emit event;
-
+        return collections[msg.sender].collection.addAsset(msg.sender, tokenURI);
+        //newAsset.uploadAsset(msg.sender, tokenURI);
+        emit AssetAdded(msg.sender, tokenURI, block.number, block.timestamp);
         
     }
 
-    function addAssetToCollection() {
-        // TODO
-        newAsset.uploadAsset(msg.sender, tokenURI);
-        
+    function getCollectionSize()
+        external
+        view
+        returns (uint256)
+    {
+        if (collections[msg.sender].exists) {
+            return collections[msg.sender].collection.balanceOf(msg.sender);
+        }
+        return 0;
     }
 
     function registerCreator() 
@@ -48,7 +63,7 @@ contract AnonyFans is Ownable, IAnonyFans {
     {
         delete registeredCreators[msg.sender];
         // TODO: Transfer all assets to user
-        // emit CreatorUnregistered(msg.sender, block.number, block.timestamp)
+        emit CreatorUnregistered(msg.sender, block.number, block.timestamp);
     }
 
     function whoAmI()
