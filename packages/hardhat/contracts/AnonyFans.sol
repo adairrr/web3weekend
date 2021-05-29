@@ -1,74 +1,68 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
+import "./UniqueAsset.sol";
+import "./IAnonyFans.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 
+contract AnonyFans is Ownable, IAnonyFans {
 
-contract AnonyFans is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
-    /**
-        List of registered users that can use contract functions.
-     */
+    // Creators can upload assets
+    mapping ( address => bool) public registeredCreators;
+    // Users can consume assets. Not used for now, but can be used for Users Ranking.
     mapping ( address => bool) public registeredUsers;
 
-    modifier onlyRegisteredUsers() {
-        require(registeredUsers[msg.sender], "User not registered.");
+    modifier onlyRegisteredCreators() {
+        require(registeredCreators[msg.sender], "Creator not registered.");
         _;
     }
+    
+    //constructor() ERC721("PostItem", "PST") {}
 
-    constructor() ERC721("PostItem", "PST") {}
-
-    function newPost(address creator, string memory tokenURI)
-        public
-        onlyRegisteredUsers
+    function newCollection(string memory name, string memory symbol, string memory tokenURI)
+        external
+        onlyRegisteredCreators
         returns (uint256)
     {
-        _tokenIds.increment();
+        UniqueAsset newAsset = new UniqueAsset (name, symbol);
+        // TODO: assign collection to msg.sender
+        // TODO: emit event;
 
-        uint256 newPostId = _tokenIds.current();
-        _mint(creator, newPostId);
-        _setTokenURI(newPostId, tokenURI);
-
-        return newPostId;
+        
     }
 
+    function addAssetToCollection() {
+        // TODO
+        newAsset.uploadAsset(msg.sender, tokenURI);
+        
+    }
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId)
-        internal
-        override(ERC721, ERC721Enumerable)
+    function registerCreator() 
+        external 
     {
-        super._beforeTokenTransfer(from, to, tokenId);
+        registeredCreators[msg.sender] = true;
+        emit NewCreatorRegistered(msg.sender, block.number, block.timestamp);
+    }
+   
+    function unregisterCreator() 
+        external 
+    {
+        delete registeredCreators[msg.sender];
+        // TODO: Transfer all assets to user
+        // emit CreatorUnregistered(msg.sender, block.number, block.timestamp)
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
-        super._burn(tokenId);
-    }
-
-    function tokenURI(uint256 tokenId)
-        public
+    function whoAmI()
+        external
         view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
+        returns(address)
     {
-        return super.tokenURI(tokenId);
+        return msg.sender;
     }
-
-    function supportsInterface(bytes4 interfaceId)
-        public
+    function amIaRegisteredCreator()
+        external
         view
-        override(ERC721, ERC721Enumerable)
-        returns (bool)
+        returns(bool)
     {
-        return super.supportsInterface(interfaceId);
-    }
-
-    function safeMint(address to, uint256 tokenId) public onlyOwner {
-        _safeMint(to, tokenId);
+        return registeredCreators[msg.sender];
     }
 }
