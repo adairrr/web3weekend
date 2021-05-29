@@ -4,12 +4,12 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: AnonyFans
+    name: UniqueAsset
     network: localhost
     source:
-      address: '{{AnonyFansAddress}}'
-      abi: AnonyFans
-      startBlock: 8668439
+      address: '{{UniqueAssetAddress}}'
+      abi: UniqueAsset
+      startBlock: 8671237
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -17,8 +17,8 @@ dataSources:
       entities:
         - Token
       abis:
-        - name: AnonyFans
-          file: ./abis/AnonyFans.json
+        - name: UniqueAsset
+          file: ./abis/UniqueAsset.json
         - name: IERC721Metadata
           file: ../../node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
       eventHandlers:
