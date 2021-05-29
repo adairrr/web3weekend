@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/ethnode/workplace/hackathons/web3weekend/packages/hardhat/contracts/Greeter.sol": {
-      "lastModificationDate": 1622227727961,
-      "contentHash": "8e4b943890d396929e7d2875c8d47222",
+    "C:\\Users\\jdink\\Desktop\\development\\web3weekend\\packages\\hardhat\\contracts\\Greeter.sol": {
+      "lastModificationDate": 1622232042560,
+      "contentHash": "6f6acf291c64b095658de2ddead92522",
       "sourceName": "contracts/Greeter.sol",
       "solcConfig": {
         "version": "0.7.6",
@@ -37,8 +37,8 @@
         "Greeter"
       ]
     },
-    "/home/ethnode/workplace/hackathons/web3weekend/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1622227647364,
+    "C:\\Users\\jdink\\Desktop\\development\\web3weekend\\node_modules\\hardhat\\console.sol": {
+      "lastModificationDate": 1622232374806,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {

@@ -93,7 +93,9 @@ module.exports = {
         }
       }
     ],
-
+  },
+  paths: {
+    artifacts: '../frontend/src/artifacts'
   }
 };
 
