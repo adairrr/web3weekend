@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import detectEthereumProvider from '@metamask/detect-provider'
+import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from 'ethers';
+
 
 import './App.css';
 
 function App() {
   let [isMetamastInstalled, setIsMetamaskInstalled] = useState();
   let [isConnecting, setIsConnecting] = useState();
+  let [isConnected, setIsConnected] = useState();
   let [currentMetaMaskAccount, setCurrentMetaMaskAccount] = useState(null);
+  let [ethersProvider, setEthersProvider] = useState();
+  let [provider, setProvider] = useState();
 
 
   useEffect(() => {
@@ -18,7 +23,7 @@ function App() {
         //detect whether the browser is connected to a provider
         let ethereumProvider = await detectEthereumProvider();
         if (ethereumProvider) {
-          // setProvider(ethereumProvider);
+          setProvider(ethereumProvider);
           startApp(ethereumProvider);
         } else {
           setIsMetamaskInstalled(false);
@@ -36,35 +41,35 @@ function App() {
             return;
           };
 
+          const handleChainChanged = _chainId => {
+            window.location.reload();
+          };
+
           //Force the browser to refresh whenever the network chain is changed
           let chainId = await _ethereumProvider.request({ method: 'eth_chainId' });
           _ethereumProvider.on('chainChanged', handleChainChanged);
           console.log('chainId: ', chainId);
 
-          const handleChainChanged = _chainId => {
-            window.location.reload();
-          };
-
           //Check if a MetaMask account has permission to connect to app
-          // let metamaskAccount;
+          let metamaskAccount;
           let accounts = await _ethereumProvider.request({ method: 'eth_accounts' });
 
           if (accounts.length > 0) {
-            // metamaskAccount = accounts[0];
+            metamaskAccount = accounts[0];
             setCurrentMetaMaskAccount(accounts[0]);
             setIsMetamaskInstalled(true);
             setIsConnected(true);
           };
-          // console.log(`metamaskAccount ${metamaskAccount}`);
+          console.log(`metamaskAccount ${metamaskAccount}`);
 
           //Create the Ethers.js provider and set it in state
           let _ethersProvider = await new ethers.providers.Web3Provider(_ethereumProvider);
           setEthersProvider(_ethersProvider);
-          // console.log('_ethersProvider: ', _ethersProvider)
+          console.log('_ethersProvider: ', _ethersProvider)
 
-          // if(accounts.length !== 0) {
-          //   let signer = await _ethersProvider.getSigner();
-          //   setEthersSigner(signer);
+          if(accounts.length !== 0) {
+            let signer = await _ethersProvider.getSigner();
+            // setEthersSigner(signer);
           //
           //   const _taro = new ethers.Contract(
           //     taroAddress.Taro,
@@ -79,7 +84,7 @@ function App() {
           //     signer
           //   );
           //   setGovernorAlpha(_governorAlpha);
-          // };
+          };
         } catch (error) {
           console.error(error);
         };
@@ -122,7 +127,7 @@ const handleOnConnect = async () => {
     provider.on('accountsChanged', handleAccountsChanged);
 
     let signer = await ethersProvider.getSigner();
-    setEthersSigner(signer);
+    // setEthersSigner(signer);
 
     // const _taro = new ethers.Contract(
     //   taroAddress.Taro,
@@ -145,7 +150,18 @@ const handleOnConnect = async () => {
   return (
     <div className="App">
       <div>
-
+        Is metamask installed? {isMetamastInstalled ? 'yes' : 'no'}
+      </div>
+      <br></br>
+      <div>
+        {isConnected
+          ?
+            'You are connected!'
+          :
+          <button disabled={isConnecting} onClick={handleOnConnect}>
+            {isConnecting ? 'Connecting' : 'Connect'}
+          </button>
+        }
       </div>
     </div>
   );
