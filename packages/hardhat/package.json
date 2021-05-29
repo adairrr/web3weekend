@@ -4,11 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "ramda": "^0.27.1"
   },
   "scripts": {
     "chain": "hardhat node",
     "test": "hardhat test --network hardhat",
+    "fork": "hardhat node --fork https://eth-rinkeby.alchemyapi.io/v2/XTXnf7fnPKpL4UjyNi-NYNjs9pPJCYY2",
     "compile": "hardhat compile",
     "deploy": "hardhat run scripts/deploy.js",
     "postdeploy": "hardhat run scripts/publish.js",
@@ -22,6 +24,8 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts-upgradeable": "^4.1.0",
+    "@openzeppelin/hardhat-upgrades": "^1.8.2",
     "chai": "^4.3.4",
     "chalk": "^4.1.1",
     "ethereum-waffle": "^3.3.0",
