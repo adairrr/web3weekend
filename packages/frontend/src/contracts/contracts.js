@@ -1,1 +1,1 @@
-module.exports = ["AnonyFans"];
+module.exports = ["AnonyFans","Collection","UniqueAsset"];

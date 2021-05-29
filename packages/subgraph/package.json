@@ -6,9 +6,9 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ GITHUB_USERNAME/your-contract",
-    "create-local": "graph create --node http://localhost:8020/ anonyfans/posts-contract",
-    "remove-local": "graph remove --node http://localhost:8020/ anonyfans/posts-contract",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/posts-contract"
+    "create-local": "graph create --node http://localhost:8020/ anonyfans/subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ anonyfans/subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/subgraph"
   },
   "dependencies": {
     "@amxx/graphprotocol-utils": "^0.1.0",

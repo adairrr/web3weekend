@@ -23,9 +23,9 @@
     "graph:prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
     "graph:codegen": "yarn workspace @crypto-fans/subgraph graph codegen",
     "graph:build": "yarn workspace @crypto-fans/subgraph graph build",
-    "graph:create-local": "yarn workspace @crypto-fans/subgraph graph create --node http://localhost:8020/ anonyfans/posts-contract",
-    "graph:remove-local": "yarn workspace @crypto-fans/subgraph graph remove --node http://localhost:8020/ anonyfans/posts-contract",
-    "graph:deploy-local": "yarn workspace @crypto-fans/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/posts-contract",
+    "graph:create-local": "yarn workspace @crypto-fans/subgraph graph create --node http://localhost:8020/ anonyfans/subgraph",
+    "graph:remove-local": "yarn workspace @crypto-fans/subgraph graph remove --node http://localhost:8020/ anonyfans/subgraph",
+    "graph:deploy-local": "yarn workspace @crypto-fans/subgraph graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 anonyfans/subgraph",
     "graph:ship-local": "yarn graph:prepare && yarn graph:codegen && yarn graph:deploy-local",
     "deploy-and-graph": "yarn hh:deploy && yarn graph:ship-local",
     "start": "yarn workspace @crypto-fans/frontend start"

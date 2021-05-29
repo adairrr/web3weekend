@@ -4,28 +4,54 @@ schema:
   file: ./src/schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: UniqueAsset
+    name: AnonyFans
     network: localhost
     source:
-      address: '{{UniqueAssetAddress}}'
-      abi: UniqueAsset
-      startBlock: 8671237
+      address: '{{AnonyFansAddress}}'
+      abi: AnonyFans
+      startBlock: 0
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
-        - Token
+        - Collection
       abis:
-        - name: UniqueAsset
-          file: ./abis/UniqueAsset.json
-        - name: IERC721Metadata
-          file: ../../node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
+        - name: AnonyFans
+          file: ./abis/AnonyFans.json
       eventHandlers:
-        # - event: Approval(indexed address,indexed address,indexed uint256)
-        #   handler: handleApproval
-        # - event: ApprovalForAll(indexed address,indexed address,bool)
-        #   handler: handleApprovalForAll
-        - event: Transfer(indexed address,indexed address,indexed uint256)
-          handler: handleTransfer
-      file: ./src/mapping.ts
+        - event: NewCreatorRegistered(address)
+          handler: handleNewCreatorRegistered
+        - event: CreatorUnregistered(address)
+          handler: handleCreatorUnregistered
+        - event: AssetAdded(address,string,address,uint256)
+          handler: handleAssetAdded
+        - event: CollectionAdded(address,string,string,address)
+          handler: handleCollectionAdded
+      file: ./src/anonyFansMapping.ts
+  # - kind: ethereum/contract
+  #   name: Collection
+  #   network: localhost
+  #   source:
+  #     address: '{{CollectionAddress}}'
+  #     abi: Collection
+  #     startBlock: 0
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Collection
+  #     abis: 
+  #       - name: Collection
+  #         file: ./abis/Collection.json
+  #       - name: IERC721Metadata
+  #         file: ../../node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,indexed uint256)
+  #         handler: handleTransfer
+  #       # - event: Approval(indexed address,indexed address,indexed uint256)
+  #       #   handler: handleApproval
+  #       # - event: ApprovalForAll(indexed address,indexed address,bool)
+  #       #   handler: handleApprovalForAll
+  #     file: ./src/collectionMapping.ts
