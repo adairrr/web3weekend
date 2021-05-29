@@ -44,6 +44,7 @@ contract AnonyFans is Ownable, IAnonyFans {
 
     function getCollectionSize()
         external
+        view
         returns (uint256)
     {
        return collections[msg.sender].balanceOf(msg.sender);
