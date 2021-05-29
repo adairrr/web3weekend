@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
+import { WalletService } from '@unlock-protocol/unlock-js';
 
 
 import './App.css';
@@ -69,6 +70,33 @@ function App() {
 
           if(accounts.length !== 0) {
             let signer = await _ethersProvider.getSigner();
+
+            const networks = {
+              4: {
+                provider:
+                  _ethersProvider,
+                unlockAddress: '0xd8c88be5e8eb88e38e6ff5ce186d764676012b0b',
+              },
+            };
+
+            const walletService = new WalletService(networks)
+            await walletService.connect(_ethersProvider, signer)
+
+            console.log('walletService: ', walletService);
+
+            const lockAddress = '0xF735257c43dB1723AAE2A46d71E467b1b8a8422A';
+            // await walletService.purchaseKey(
+            //   {
+            //     lockAddress,
+            //   },
+            //   (error, hash) => {
+            //     // This is the hash of the transaction!
+            //     console.log({ hash })
+            //   }
+            // );
+            //the created hash is: 0x3cd5a3ffda25c8e9d9bb0eefd3fadd0efff3f98e8f3f615b02a79284b6b318c7
+
+
             // setEthersSigner(signer);
           //
           //   const _taro = new ethers.Contract(
