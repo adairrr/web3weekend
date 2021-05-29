@@ -20,6 +20,16 @@ async function main() {
   await anonyfans.deployed();
 
   console.log("AnonyFans deployed to:", anonyfans.address);
+
+  const whoAmI = await anonyfans.whoAmI();
+  console.log("Who am I? --> ", whoAmI);
+  let amIaRegisteredCreator = await anonyfans.amIaRegisteredCreator();
+  console.log("Am I registered? --> ", amIaRegisteredCreator);
+  await anonyfans.registerCreator();
+  amIaRegisteredCreator = await anonyfans.amIaRegisteredCreator();
+  console.log("Am I registered, now? --> ", amIaRegisteredCreator);
+
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
