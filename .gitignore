@@ -10,9 +10,24 @@ packages/frontend.pnp.js
 packages/frontend/coverage
 packages/frontend/build
 
-# misc
-packages/frontend/.DS_Store
-packages/frontend/.env.*
 
 packages/frontend/yarn-debug.log*
 packages/frontend/yarn-error.log*
+
+
+packages/hardhat/cache
+packages/hardhat/*.txt
+packages/hardhat/.openzeppelin
+packages/hardhat/artifacts
+
+
+packages/subgraph/subgraph.yaml
+packages/subgraph/generated
+packages/subgraph/abis
+packages/subgraph/config/config.json
+packages/subgraph/config/config.ts
+
+# misc
+.DS_Store
+.env.*
+.vscode

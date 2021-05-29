@@ -3,6 +3,7 @@ const fs = require("fs");
 const chalk = require("chalk");
 
 require("@nomiclabs/hardhat-waffle");
+require('@openzeppelin/hardhat-upgrades');
 
 const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 
@@ -47,6 +48,13 @@ module.exports = {
         (you can put in a mnemonic here to set the deployer locally)
       */
     },
+    // hardhat: {
+    //   forking: {
+    //     // https://hardhat.org/guides/mainnet-forking.html
+    //     url: "https://eth-rinkeby.alchemyapi.io/v2/XTXnf7fnPKpL4UjyNi-NYNjs9pPJCYY2",
+    //     blockNumber: 12037854
+    //   }
+    // },
     rinkeby: {
       url: "https://rinkeby.infura.io/v3/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", //<---- YOUR INFURA ID! (or it won't work)
       accounts: {

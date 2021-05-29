@@ -17,6 +17,16 @@
     "hh:watch": "yarn workspace @crypto-fans/hardhat watch",
     "hh:accounts": "yarn workspace @crypto-fans/hardhat accounts",
     "hh:generate": "yarn workspace @crypto-fans/hardhat generate",
+    "graph:run-node": "cd docker/graph-node && docker-compose up",
+    "graph:remove-node": "cd docker/graph-node && docker-compose down",
+    "graph:prepare": "mustache packages/subgraph/config/config.json packages/subgraph/src/subgraph.template.yaml > packages/subgraph/subgraph.yaml",
+    "graph:codegen": "yarn workspace @crypto-fans/subgraph graph codegen",
+    "graph:build": "yarn workspace @crypto-fans/subgraph graph build",
+    "graph:create-local": "yarn workspace @crypto-fans/subgraph graph create",
+    "graph:remove-local": "yarn workspace @crypto-fans/subgraph graph remove",
+    "graph:deploy-local": "yarn workspace @crypto-fans/subgraph graph deploy",
+    "graph:ship-local": "yarn graph-prepare && yarn graph-codegen && yarn graph-deploy-local",
+    "deploy-and-graph": "yarn deploy && yarn graph-ship-local",
     "start": "yarn workspace @crypto-fans/frontend start"
   },
   "workspaces": {
