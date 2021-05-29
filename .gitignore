@@ -26,6 +26,7 @@ packages/subgraph/generated
 packages/subgraph/abis
 packages/subgraph/config/config.json
 packages/subgraph/config/config.ts
+packages/frontend/src/contracts
 
 # misc
 .DS_Store
