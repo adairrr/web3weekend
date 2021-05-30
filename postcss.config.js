@@ -3,6 +3,10 @@ const purgecss = require('@fullhuman/postcss-purgecss')
 const tailwindcss = require('tailwindcss')
 const cssnano = require('cssnano')
 
+// NOTE: this file does not work when in the monorepo, 
+//  and paths are relative to `./packages/frontend` 
+//  NOT where this file is located
+
 module.exports = {
     plugins: [
         postcssPresetEnv({
@@ -20,5 +24,3 @@ module.exports = {
         })
     ]
 }
-// this file does not work when in the monorepo, and paths are relative to: ./packages/fronend, 
-// NOT where this file is located
