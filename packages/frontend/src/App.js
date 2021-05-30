@@ -21,14 +21,14 @@ function App() {
     //let [fileToUpload, setFileToUpload] = useState();
     let [hashOfPurchasedKey, setHashOfPurchasedKey] = useState();
     let [buffer, setBuffer] = useState(null);
+    let [imageHash, setImageHash] = useState("");
 
     // connect to the default API address http://localhost:5001
     //const ipfs = create({host: 'localhost', port: 5001, protocol: 'http'});
     const ipfs = create({
                     host: 'ipfs.infura.io', 
                     port: 5001, 
-                    protocol: 'https',
-                    timeout: 10000 
+                    protocol: 'https'
                   });
 
   
@@ -164,9 +164,11 @@ function App() {
     })*/
     const result = await ipfs.add(buffer);
     console.log("IPFS result: ", result);
-    
+    setImageHash(result.path);
   }
 
+    // Sample hash: QmaBB6FviGLCbDQYs9bBuJh3GpBqRzg7V9XrDioV1kkhiH
+    // Sample url: http://ipfs.infura.io/ipfs/QmaBB6FviGLCbDQYs9bBuJh3GpBqRzg7V9XrDioV1kkhiH
   const getFile = async e => {
     e.preventDefault();
   }
@@ -294,7 +296,7 @@ function App() {
         <form onSubmit={onSubmitGetFile}>
           <input onChange={getFile}/>  <input type="submit" />
         </form>
-        
+        <img src={`http://ipfs.infura.io/ipfs/${imageHash}`}></img>
       </div>
     </div>
   );
