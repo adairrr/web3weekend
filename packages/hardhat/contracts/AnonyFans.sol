@@ -27,16 +27,21 @@ contract AnonyFans is Ownable, IAnonyFans {
         // TODO: assign collection to msg.sender
         collections[msg.sender].collection = newCollection;
         collections[msg.sender].exists = true;
-        emit CollectionAdded(msg.sender, name, symbol, block.number, block.timestamp);
+        emit CollectionAdded(msg.sender, name, symbol, address(newCollection));
     }
 
     function addAssetToCollection(string memory tokenURI) 
         external
-        returns (uint256)
+        returns (uint256 assetId)
     {
-        return collections[msg.sender].collection.addAsset(msg.sender, tokenURI);
+        // storage so we can access it via pointer
+        Collections storage senderCollections = collections[msg.sender];
+
+        require(collections[msg.sender].exists, "Collection must exist");
+
+        assetId = senderCollections.collection.addAsset(msg.sender, tokenURI);
         //newAsset.uploadAsset(msg.sender, tokenURI);
-        emit AssetAdded(msg.sender, tokenURI, block.number, block.timestamp);
+        emit AssetAdded(msg.sender, tokenURI, address(senderCollections.collection), assetId);
         
     }
 
@@ -55,7 +60,7 @@ contract AnonyFans is Ownable, IAnonyFans {
         external 
     {
         registeredCreators[msg.sender] = true;
-        emit NewCreatorRegistered(msg.sender, block.number, block.timestamp);
+        emit NewCreatorRegistered(msg.sender);
     }
    
     function unregisterCreator() 
@@ -63,7 +68,7 @@ contract AnonyFans is Ownable, IAnonyFans {
     {
         delete registeredCreators[msg.sender];
         // TODO: Transfer all assets to user
-        emit CreatorUnregistered(msg.sender, block.number, block.timestamp);
+        emit CreatorUnregistered(msg.sender);
     }
 
     function whoAmI()
@@ -73,6 +78,7 @@ contract AnonyFans is Ownable, IAnonyFans {
     {
         return msg.sender;
     }
+
     function amIaRegisteredCreator()
         external
         view

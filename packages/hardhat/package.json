@@ -10,7 +10,7 @@
   "scripts": {
     "chain": "hardhat node",
     "test": "hardhat test --network hardhat",
-    "fork": "hardhat node --fork https://eth-rinkeby.alchemyapi.io/v2/XTXnf7fnPKpL4UjyNi-NYNjs9pPJCYY2",
+    "fork": "hardhat node --fork https://eth-rinkeby.alchemyapi.io/v2/XTXnf7fnPKpL4UjyNi-NYNjs9pPJCYY2 --fork-block-number 8671237",
     "compile": "hardhat compile",
     "deploy": "hardhat run scripts/deploy.js",
     "postdeploy": "hardhat run scripts/publish.js",

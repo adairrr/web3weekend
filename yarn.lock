@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@amxx/graphprotocol-utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@amxx/graphprotocol-utils/-/graphprotocol-utils-0.0.8.tgz#26e0f76976d36851574967faceaf28988d62a2aa"
-  integrity sha512-imZKGi3i+u36L2/y94hWnDLA3FCEEeOUQtwlEP3HkVX6FyivYT0Va1SWQ6Y6eWB9o12acoa5bGU2CtvWRmxw1g==
+"@amxx/graphprotocol-utils@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@amxx/graphprotocol-utils/-/graphprotocol-utils-0.1.0.tgz#5e535285dd80cae916f632819095d56f96a91929"
+  integrity sha512-LFFUHswNvc1VUaJ/tunv5C0Wj5Lxa0jzXU0Z8KjafsdmUdCaJGvMlE0aLYSoMjV7G+FUuzRaFqdAF3lWp7525g==
   dependencies:
-    "@graphprotocol/graph-ts" "^0.19.0"
+    "@graphprotocol/graph-ts" "^0.20.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.12.13":
   version "7.12.13"
@@ -1487,13 +1487,6 @@
     yaml "^1.5.1"
   optionalDependencies:
     keytar "^7.4.0"
-
-"@graphprotocol/graph-ts@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@graphprotocol/graph-ts/-/graph-ts-0.19.0.tgz#e1ea3abcf94b91b36624a0821c6561d68720397f"
-  integrity sha512-9dRwZF/jMHjIC/4jZDl8uUV3vHbXgHZV2m6728JbYcbjt4Kaw73cIxVqrsXHyDNVkVaIkZ/yorQ37pY2suLddg==
-  dependencies:
-    assemblyscript "https://github.com/AssemblyScript/assemblyscript#36040d5b5312f19a025782b5e36663823494c2f3"
 
 "@graphprotocol/graph-ts@^0.20.0":
   version "0.20.0"
@@ -4125,7 +4118,7 @@ commander@3.0.2:
   resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.2.tgz#6837c3fb677ad9933d1cfba42dd14d5117d6b39e"
   integrity sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==
 
-commander@^2.15.0, commander@^2.20.0, commander@^2.20.3:
+commander@^2.15.0, commander@^2.20.0, commander@^2.20.3, commander@^2.9.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -4202,6 +4195,21 @@ concat-stream@^1.5.1, concat-stream@~1.6.2:
     inherits "^2.0.3"
     readable-stream "^3.0.2"
 
+<<<<<<< HEAD
+=======
+concat@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/concat/-/concat-1.0.3.tgz#40f3353089d65467695cb1886b45edd637d8cca8"
+  integrity sha1-QPM1MInWVGdpXLGIa0Xt1jfYzKg=
+  dependencies:
+    commander "^2.9.0"
+
+confusing-browser-globals@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/confusing-browser-globals/-/confusing-browser-globals-1.0.10.tgz#30d1e7f3d1b882b25ec4933d1d1adac353d20a59"
+  integrity sha512-gNld/3lySHwuhaVluJUKLePYirM3QNCKzVxqAdhJII9/WXKVX5PURzMVJspS1jTslSqjeuG4KMVTSouit5YPHA==
+
+>>>>>>> feature/nft-subgraph
 connect-history-api-fallback@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/connect-history-api-fallback/-/connect-history-api-fallback-1.6.0.tgz#8b32089359308d111115d81cad3fceab888f97bc"
