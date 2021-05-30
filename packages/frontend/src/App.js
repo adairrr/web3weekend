@@ -1,22 +1,38 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
-import { WalletService } from '@unlock-protocol/unlock-js';
+//import { WalletService } from '@unlock-protocol/unlock-js';
+import { create, globSource } from 'ipfs-http-client';
 
 
 import './App.css';
 
 function App() {
-  let [isMetamastInstalled, setIsMetamaskInstalled] = useState();
-  let [isConnecting, setIsConnecting] = useState();
-  let [isConnected, setIsConnected] = useState();
-  let [currentMetaMaskAccount, setCurrentMetaMaskAccount] = useState(null);
-  let [ethersProvider, setEthersProvider] = useState();
-  let [provider, setProvider] = useState();
-  let [walletService, setWalletService] = useState();
-  let [keyToPurchase, setKeyToPurchase] = useState();
-  let [hashOfPurchasedKey, setHashOfPurchasedKey] = useState();
+    const some = this;
+  
+    let [isMetamastInstalled, setIsMetamaskInstalled] = useState();
+    let [isConnecting, setIsConnecting] = useState();
+    let [isConnected, setIsConnected] = useState();
+    let [currentMetaMaskAccount, setCurrentMetaMaskAccount] = useState(null);
+    let [ethersProvider, setEthersProvider] = useState();
+    let [provider, setProvider] = useState();
+    let [walletService, setWalletService] = useState();
+    let [keyToPurchase, setKeyToPurchase] = useState();
+    //let [fileToUpload, setFileToUpload] = useState();
+    let [hashOfPurchasedKey, setHashOfPurchasedKey] = useState();
+    let [buffer, setBuffer] = useState(null);
 
+    // connect to the default API address http://localhost:5001
+    //const ipfs = create({host: 'localhost', port: 5001, protocol: 'http'});
+    const ipfs = create({
+                    host: 'ipfs.infura.io', 
+                    port: 5001, 
+                    protocol: 'https',
+                    timeout: 10000 
+                  });
+
+  
+ 
   useEffect(() => {
     const init = async () => {
       setIsMetamaskInstalled(true);
@@ -81,10 +97,10 @@ function App() {
               },
             };
 
-            const _walletService = new WalletService(networks);
+            /*const _walletService = new WalletService(networks);
             await _walletService.connect(_ethersProvider, signer)
             setWalletService(_walletService);
-
+*/
             // setEthersSigner(signer);
           //
           //   const _taro = new ethers.Contract(
@@ -109,6 +125,7 @@ function App() {
     init();
   }, []);
 
+
   const getAccounts = async () => {
     try {
       const accounts = await provider.request({ method: 'eth_requestAccounts' });
@@ -117,6 +134,52 @@ function App() {
       console.error(error);
     };
   };
+
+  const captureFile = async e => {
+    e.preventDefault();
+    const fileToUpload = e.target.files[0];
+    console.log(fileToUpload);
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(fileToUpload);
+    reader.onloadend = () => {
+      
+      setBuffer(Buffer(reader.result));
+      console.log('buffer', Buffer(reader.result));
+    }
+    
+  };
+
+  const onSubmitUploadFile = async e => {
+    e.preventDefault();
+    console.log(ipfs.getEndpointConfig());
+    console.log(buffer);
+    console.log('Submiting form...');
+
+    /*ipfs.add(buffer, (error, result) => {
+      console.log("IPFS result: ", result);
+      if (error){
+        console.error(error);
+        return;
+      }
+    })*/
+    const result = await ipfs.add(buffer);
+    console.log("IPFS result: ", result);
+    
+  }
+
+  const getFile = async e => {
+    e.preventDefault();
+  }
+
+  const onSubmitGetFile = async e => {
+    e.preventDefault();
+    console.log(buffer);
+    console.log('Getting file...');
+    
+    const result = await ipfs.add(buffer);
+    console.log("IPFS result: ", result);
+    
+  }
 
   function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
@@ -148,14 +211,15 @@ function App() {
         4: {
           provider:
             ethersProvider,
-          unlockAddress: '0xd8c88be5e8eb88e38e6ff5ce186d764676012b0b',
+          unlockAddress: '0xd8c88be5e8eb88e38e6ff5ce186d764676012b0b', // Rinkeby proxy UNLOCK.SOL 
         },
       };
 
+      /*
       const _walletService = new WalletService(networks);
       await _walletService.connect(ethersProvider, signer)
       setWalletService(_walletService);
-
+*/
       // setEthersSigner(signer);
 
       // const _taro = new ethers.Contract(
@@ -195,6 +259,7 @@ function App() {
     setKeyToPurchase(e.target.value);
   };
 
+
   return (
     <div className="App">
       <div>
@@ -213,12 +278,23 @@ function App() {
       </div>
       <br></br>
       <div>
-        <p>You want the buy a key from the lock of this creator: 0xF735257c43dB1723AAE2A46d71E467b1b8a8422A</p>
+        {/*  <p>You want the buy a key from the lock of this creator: 0xF735257c43dB1723AAE2A46d71E467b1b8a8422A</p>
         <form onSubmit={_purchaseKey}>
           <input placeholder="paste the lock # here" onChange={handleOnPurchaseKeyChange}></input>
           <button type="submit">Purchase a key</button>
+          
         </form>
-        <p>This is the hash of the key you purchased: {hashOfPurchasedKey}</p>
+        <p>This is the transaction hash of the key you purchased: {hashOfPurchasedKey}</p>
+        */}
+        <br></br>
+        <form onSubmit={onSubmitUploadFile}>
+          <input type='file' onChange={captureFile}/>  <input type="submit" />
+        </form>
+        
+        <form onSubmit={onSubmitGetFile}>
+          <input onChange={getFile}/>  <input type="submit" />
+        </form>
+        
       </div>
     </div>
   );
