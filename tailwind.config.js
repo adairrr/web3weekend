@@ -13,7 +13,8 @@ module.exports = {
                 gray: colors.gray,
                 teal: colors.teal,
                 cyan: colors.cyan,
-                indigo: colors.indigo
+                indigo: colors.indigo,
+                purple: colors.violet
             },
             inset: {
                 '-68': '-17rem',

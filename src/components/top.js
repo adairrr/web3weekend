@@ -70,7 +70,7 @@ const Top = () => {
         <Assets.Polo className='absolute right-172 bottom-20' />
       </div>
       <div className='absolute right-48 flex flex-col items-center justify-center'>
-        <Assets.Explore />
+        <Assets.Explore className='mb-4' />
         <Assets.Downarrow className='cursor-pointer' />
       </div>
     </div>
