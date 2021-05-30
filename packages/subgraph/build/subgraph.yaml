@@ -1,0 +1,31 @@
+specVersion: 0.0.2
+description: anonyfans-subgraph
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: AnonyFans
+    network: localhost
+    source:
+      address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+      abi: AnonyFans
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Collection
+      abis:
+        - name: AnonyFans
+          file: AnonyFans/abis/AnonyFans.json
+      eventHandlers:
+        - event: NewCreatorRegistered(address)
+          handler: handleNewCreatorRegistered
+        - event: CreatorUnregistered(address)
+          handler: handleCreatorUnregistered
+        - event: AssetAdded(address,string,address,uint256)
+          handler: handleAssetAdded
+        - event: CollectionAdded(address,string,string,address)
+          handler: handleCollectionAdded
+      file: AnonyFans/AnonyFans.wasm

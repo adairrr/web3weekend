@@ -1,0 +1,36 @@
+
+¶®dataSources:
+  - kind: ethereum/contract
+    mapping:
+      abis:
+        - file:
+            /: /ipfs/QmQjxtY47diz9JkxVWaD9BBpyc7PtMtBTiEmjkehu64SA9
+          name: AnonyFans
+      apiVersion: 0.0.4
+      entities:
+        - Collection
+      eventHandlers:
+        - event: NewCreatorRegistered(address)
+          handler: handleNewCreatorRegistered
+        - event: CreatorUnregistered(address)
+          handler: handleCreatorUnregistered
+        - event: 'AssetAdded(address,string,address,uint256)'
+          handler: handleAssetAdded
+        - event: 'CollectionAdded(address,string,string,address)'
+          handler: handleCollectionAdded
+      file:
+        /: /ipfs/QmYF1CqpN83eUtXGb6K95jP6bnnXfhd6QsJbJNbXkEdkTr
+      kind: ethereum/events
+      language: wasm/assemblyscript
+    name: AnonyFans
+    network: localhost
+    source:
+      abi: AnonyFans
+      address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0'
+      startBlock: 0
+description: anonyfans-subgraph
+schema:
+  file:
+    /: /ipfs/QmY8Umw9vUoPwhq33wa3R76L2M2q2fJqUJhSLuKPgRZA1e
+specVersion: 0.0.2
+®
