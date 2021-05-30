@@ -10,14 +10,6 @@ import {
 } from "react-router-dom";
 
 const App = _ => {
-
-  let [isMetamastInstalled, setIsMetamaskInstalled] = useState();
-  let [isConnecting, setIsConnecting] = useState();
-  let [isConnected, setIsConnected] = useState();
-  let [currentMetaMaskAccount, setCurrentMetaMaskAccount] = useState(null);
-  let [ethersProvider, setEthersProvider] = useState();
-  let [provider, setProvider] = useState();
-
   return (
     <Router>
       <Top />
